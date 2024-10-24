@@ -1,9 +1,9 @@
 {
   "name": "herlandio-test_wa_project",
   "version": "1.0.0",
-  "main": "cli.ts",
+  "main": "src/cli.ts",
   "scripts": {
-    "analyze": "bun run cli.ts analyze"
+    "analyze": "bun run src/cli.ts analyze"
   },
   "dependencies": {
     "@types/node": "^18.0.0"
