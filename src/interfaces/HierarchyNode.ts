@@ -1,3 +1,3 @@
 export interface HierarchyNode {
-    [key: string]: HierarchyNode | string[];
+    [key: string]: string[] | HierarchyNode;
 }

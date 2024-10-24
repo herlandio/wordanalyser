@@ -14,7 +14,7 @@ export class PhraseService {
         const wordCount: Record<string, number> = {};
         const wordsInPhrase = phrase.toLowerCase().split(/\s+/);
         const keyMap: Record<string, string> = {};
-
+    
         const buildKeyMap = (node: HierarchyNode, parentKey: string | null = null): void => {
             for (const key in node) {
                 if (Array.isArray(node[key])) {
@@ -26,14 +26,16 @@ export class PhraseService {
                 }
             }
         };
-
+    
         buildKeyMap(this.hierarchy);
-
+    
         wordsInPhrase.forEach(word => {
             const lowerCaseWord = word.toLowerCase();
             if (keyMap[lowerCaseWord]) {
                 const category = keyMap[lowerCaseWord];
-                wordCount[category] = (wordCount[category] || 0) + 1;
+                if (category) {
+                    wordCount[category] = (wordCount[category] || 0) + 1;
+                }
             }
         });
 
