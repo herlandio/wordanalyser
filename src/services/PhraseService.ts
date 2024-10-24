@@ -1,8 +1,5 @@
 import { HierarchyRepository } from '../repositories/HierarchyRepository';
-
-interface HierarchyNode {
-    [key: string]: HierarchyNode | string[];
-}
+import { HierarchyNode } from '../interfaces/HierarchyNode';
 
 export class PhraseService {
     private repository: HierarchyRepository;
