@@ -1,4 +1,4 @@
-import { ConsoleView } from '../src/views/ConsoleView';
+import { ConsoleView } from '../../src/views/ConsoleView';
 
 describe('ConsoleView', () => {
     let consoleView: ConsoleView;

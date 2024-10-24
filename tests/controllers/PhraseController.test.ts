@@ -1,6 +1,6 @@
-import { PhraseController } from '../src/controllers/PhraseController';
-import { PhraseService } from '../src/services/PhraseService';
-import { ConsoleView } from '../src/views/ConsoleView';
+import { PhraseController } from '../../src/controllers/PhraseController';
+import { PhraseService } from '../../src/services/PhraseService';
+import { ConsoleView } from '../../src/views/ConsoleView';
 
 describe('PhraseController', () => {
     let controller: PhraseController;

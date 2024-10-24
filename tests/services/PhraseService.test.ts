@@ -1,6 +1,6 @@
-import { PhraseService } from '../src/services/PhraseService';
-import { HierarchyRepository } from '../src/repositories/HierarchyRepository';
-import { HierarchyNode } from '../src/interfaces/HierarchyNode';
+import { PhraseService } from '../../src/services/PhraseService';
+import { HierarchyRepository } from '../../src/repositories/HierarchyRepository';
+import { HierarchyNode } from '../../src/interfaces/HierarchyNode';
 
 describe('PhraseService', () => {
     let phraseService: PhraseService;

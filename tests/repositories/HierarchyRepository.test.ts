@@ -1,4 +1,4 @@
-import { HierarchyRepository } from '../src/repositories/HierarchyRepository';
+import { HierarchyRepository } from '../../src/repositories/HierarchyRepository';
 import * as fs from 'fs';
 
 describe('HierarchyRepository', () => {
