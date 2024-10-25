@@ -66,4 +66,5 @@ Acesse:
 ```
 http://localhost:3000/
 ```
+Uso: Ao clicar em salvar em formato json salve na pasta dicts dentro de cli-analyser onde a mesma consegue ler o conteúdo.
 
