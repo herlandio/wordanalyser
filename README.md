@@ -6,6 +6,7 @@ Este sistema analisa uma frase fornecida e retorna a quantidade de ocorrências 
  - Docker instalado.
 ### Como executar a análise de uma frase:
 
+Acesse a pasta cli-analyser
 ```
 syntax: bun run src/cli.ts analyze –depth <n> –verbose (optional) “{phrase}”
 ```
@@ -20,20 +21,49 @@ syntax: bun run src/cli.ts analyze –depth <n> –verbose (optional) “{phrase
 
 ### Exemplos de Execução:
 Com exibição do tempo de análise (--verbose):
+
+Acesse a pasta cli-analyser
+
 ```
 docker-compose run --rm wa-svc bun run src/cli.ts analyze --depth 4 "tem cavalos" --verbose
 ```
+
 - Esse comando analisa a frase "tem cavalos" até o nível de profundidade 4 e exibe os tempos de carregamento e verificação.
 
 Sem exibição do tempo de análise:
- 
+
+Acesse a pasta cli-analyser
+
 ```
 docker-compose run --rm wa-svc bun run src/cli.ts analyze --depth 4 "tem cavalos"
 ```
 - Neste caso, o tempo de execução não será exibido.
 
 ### Execução dos Testes:
-Para executar os testes do sistema sem exibir o tempo de execução: 
+Para executar os testes do sistema sem exibir o tempo de execução:
+
+Acesse a pasta cli-analyser
+
 ```
 docker-compose run --rm wa-svc bun test"
 ```
+## Front Reactjs
+
+Permite a criação de hierarquias além de exibir visualmente os items adicionados, também a possibilidade de salvar em formato json.
+
+Acesse a pasta front-analyser 
+
+Instale as Dependências:
+```
+npm install
+```
+Executar a aplicação:
+
+```
+npm run start
+```
+Acesse:
+```
+http://localhost:3000/
+```
+
