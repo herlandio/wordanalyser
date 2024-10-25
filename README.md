@@ -45,7 +45,7 @@ Para executar os testes do sistema sem exibir o tempo de execução:
 Acesse a pasta cli-analyser
 
 ```
-docker-compose run --rm wa-svc bun test"
+docker-compose run --rm wa-svc bun test
 ```
 ## Front Reactjs
 
