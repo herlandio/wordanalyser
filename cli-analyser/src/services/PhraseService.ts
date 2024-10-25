@@ -7,7 +7,7 @@ export class PhraseService {
 
     constructor() {
         this.repository = new HierarchyRepository();
-        this.hierarchy = this.repository.loadHierarchy();
+        this.hierarchy = this.repository.loadHierarchies();
     }
 
     public analyzePhrase(phrase: string): Record<string, number> {

@@ -1,15 +1,22 @@
+import path from 'path';
+import fs from 'fs';
 import { readFileSync } from 'fs';
-import * as path from 'path';
 
 export class HierarchyRepository {
-    private filePath: string;
+    private directoryPath: string;
 
     constructor() {
-        this.filePath = path.join(__dirname, '..', '..', 'dicts', 'words.json');
+        this.directoryPath = path.join(__dirname, '..', '..', 'dicts');
     }
 
-    public loadHierarchy(): any {
-        const data = readFileSync(this.filePath, 'utf-8');
-        return JSON.parse(data);
+    public loadHierarchies(): any[] {
+        const files = fs.readdirSync(this.directoryPath);
+        const jsonFiles = files.filter(file => file.endsWith('.json'));
+
+        return jsonFiles.map(file => {
+            const filePath = path.join(this.directoryPath, file);
+            const data = readFileSync(filePath, 'utf-8');
+            return JSON.parse(data);
+        });
     }
 }

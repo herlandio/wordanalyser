@@ -10,7 +10,7 @@ describe('PhraseService', () => {
     };
 
     beforeEach(() => {
-        const hierarchyRepositorySpy = jest.spyOn(HierarchyRepository.prototype, 'loadHierarchy');
+        const hierarchyRepositorySpy = jest.spyOn(HierarchyRepository.prototype, 'loadHierarchies');
         hierarchyRepositorySpy.mockReturnValue(mockHierarchy);
         phraseService = new PhraseService();
     });
