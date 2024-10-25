@@ -1,4 +1,4 @@
-import { HierarchyRepository } from '../repositories/HierarchyRepository';
+import { HierarchyRepository } from '../repositories/HierarchyRepository'; 
 import { HierarchyNode } from '../interfaces/HierarchyNode';
 
 export class PhraseService {
@@ -10,19 +10,20 @@ export class PhraseService {
         this.hierarchy = this.repository.loadHierarchies();
     }
 
-    public analyzePhrase(phrase: string): Record<string, number> {
+    public analyzePhrase(phrase: string, depth: number): Record<string, number> {
         const wordCount: Record<string, number> = {};
         const wordsInPhrase = phrase.toLowerCase().split(/\s+/);
         const keyMap: Record<string, string> = {};
     
-        const buildKeyMap = (node: HierarchyNode, parentKey: string | null = null): void => {
+        const buildKeyMap = (node: HierarchyNode, parentKey: string | null = null, currentDepth: number = 0): void => {
+            if (currentDepth >= depth) return;
             for (const key in node) {
                 if (Array.isArray(node[key])) {
                     node[key].forEach(word => {
                         keyMap[word.toLowerCase()] = parentKey || key;
                     });
                 } else if (typeof node[key] === 'object') {
-                    buildKeyMap(node[key] as HierarchyNode, key);
+                    buildKeyMap(node[key] as HierarchyNode, key, currentDepth + 1);
                 }
             }
         };

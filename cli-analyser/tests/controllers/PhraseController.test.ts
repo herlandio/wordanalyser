@@ -21,12 +21,13 @@ describe('PhraseController', () => {
 
     it('should display results when runCLI is called with valid arguments', () => {
         const args = ['--depth', '2', 'Hello World'];
-
+    
         controller.runCLI(args);
-
-        expect(phraseService.analyzePhrase).toHaveBeenCalledWith('Hello World');
-        expect(consoleView.displayResults).toHaveBeenCalledWith({animal: 3}, false, expect.any(Number), expect.any(Number));
+    
+        expect(phraseService.analyzePhrase).toHaveBeenCalledWith('Hello World', 2);
+        expect(consoleView.displayResults).toHaveBeenCalledWith({ animal: 3 }, false, expect.any(Number), expect.any(Number));
     });
+    
 
     it('should throw an error if the usage is invalid', () => {
         const args = ['--depth', '2'];
