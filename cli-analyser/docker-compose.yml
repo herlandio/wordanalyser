@@ -1,5 +1,0 @@
-services:
-  wa-svc:
-    build: .
-    volumes:
-      - .:/app

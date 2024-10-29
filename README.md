@@ -10,11 +10,17 @@ git clone https://github.com/herlandio/wordanalyser.git
 ### Pré-requisitos:
  - Docker instalado.
 
+### Para começar:
+- Inicie os containers
+
+```
+docker-compose up -d
+```
+
 ### Como executar a análise de uma frase:
 
-Acesse a pasta cli-analyser
 ```
-syntax: bun run src/cli.ts analyze –depth <n> –verbose (optional) “{phrase}”
+syntax: docker-compose exec wa-svc bun run src/cli.ts analyze –depth <n> –verbose (optional) “{phrase}”
 ```
 - O comando analisa a frase fornecida e exibe uma tabela com a contagem de palavras até o nível de profundidade especificado.
 
@@ -28,30 +34,24 @@ syntax: bun run src/cli.ts analyze –depth <n> –verbose (optional) “{phrase
 ### Exemplos de Execução:
 Com exibição do tempo de análise (--verbose):
 
-Acesse a pasta cli-analyser
-
 ```
-docker-compose run --rm wa-svc bun run src/cli.ts analyze --depth 5 "tem cavalos" --verbose
+docker-compose exec wa-svc bun run src/cli.ts analyze --depth 5 "tem cavalos" --verbose
 ```
 
-- Esse comando analisa a frase "tem cavalos" até o nível de profundidade 4 e exibe os tempos de carregamento e verificação.
+- Esse comando analisa a frase "tem cavalos" até o nível de profundidade 5 e exibe os tempos de carregamento e verificação.
 
 Sem exibição do tempo de análise:
 
-Acesse a pasta cli-analyser
-
 ```
-docker-compose run --rm wa-svc bun run src/cli.ts analyze --depth 5 "tem cavalos"
+docker-compose exec wa-svc bun run src/cli.ts analyze --depth 5 "tem cavalos"
 ```
 - Neste caso, o tempo de execução não será exibido.
 
 ### Execução dos Testes:
 Para executar os testes do sistema sem exibir o tempo de execução:
 
-Acesse a pasta cli-analyser
-
 ```
-docker-compose run --rm wa-svc bun test
+docker-compose exec wa-svc bun test
 ```
 ## Front Reactjs
 
@@ -59,19 +59,8 @@ Permite a criação de hierarquias além de exibir visualmente os items adiciona
 
  <img src="https://github.com/herlandio/wordanalyser/blob/development/front-analyser/Captura%20de%20tela%202024-10-29%20121450.png" width="350"/>
  <img src="https://github.com/herlandio/wordanalyser/blob/development/front-analyser/Captura%20de%20tela%202024-10-29%20121326.png" width="350"/>
- 
-Acesse a pasta front-analyser 
 
-Instale as Dependências:
-```
-npm install
-```
-Executar a aplicação:
-
-```
-npm run start
-```
-Acesse:
+Acesse a aplicação:
 ```
 http://localhost:3000/
 ```

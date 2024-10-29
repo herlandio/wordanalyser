@@ -1,0 +1,22 @@
+services:
+  wa-svc:
+    build:
+      dockerfile: ./cli-analyser/Dockerfile
+    volumes:
+    - ./cli-analyser:/app
+    ports:
+      - 3001:3001
+    networks:
+      - wa-network
+
+  wa-app:
+    build:
+      dockerfile: ./front-analyser/Dockerfile
+    ports:
+      - "3000:80"
+    networks:
+      - wa-network
+
+networks:
+  wa-network:
+    driver: bridge

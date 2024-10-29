@@ -2,8 +2,12 @@ FROM oven/bun:latest
 
 WORKDIR /app
 
-COPY package.json bun.lockb* ./
+COPY ./cli-analyser/package.json bun.lockb* ./
 
 RUN bun install
 
-COPY . .
+COPY ./cli-analyser .
+
+EXPOSE 3001
+
+CMD ["bun", "run", "start"]

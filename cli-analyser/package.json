@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "src/cli.ts",
   "scripts": {
-    "analyze": "bun run src/cli.ts analyze"
+    "start": "bun run server.ts"
   },
   "dependencies": {
     "@types/node": "^18.0.0"
