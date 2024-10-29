@@ -47,19 +47,6 @@ const useWordHierarchy = () => {
     setNodes((prevNodes) => prevNodes.map(addNodeRecursively));
   };
 
-  const removeNode = (nodeToRemove: WordHierarchy) => {
-    const removeNodeRecursively = (nodes: WordHierarchy[]): WordHierarchy[] => {
-      return nodes
-        .filter(node => node.id !== nodeToRemove.id)
-        .map(node => ({
-          ...node,
-          children: removeNodeRecursively(node.children),
-        }));
-    };
-  
-    setNodes((prevNodes) => removeNodeRecursively(prevNodes));
-  };
-
   const convertTreeToObject = (nodes: WordHierarchy[]): any => {
     const result: any = {};
     nodes.forEach((node) => {
@@ -78,7 +65,6 @@ const useWordHierarchy = () => {
     nodes,
     addRootNode,
     addChildNode,
-    removeNode,
     convertTreeToObject
   };
 };
