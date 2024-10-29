@@ -28,7 +28,7 @@ const HierarchyList: React.FC<HierarchyListProps> = ({ node, addChildNode, remov
         <Row>
           <Col xs="auto">
             <Button variant="secondary" onClick={toggleExpand} size="sm">
-              {isExpanded ? "Fechar" : "Criar"}
+              {isExpanded ? "Fechar" : 'Expandir'}
             </Button>
           </Col>
           <Col><strong>{node.name}</strong></Col>
