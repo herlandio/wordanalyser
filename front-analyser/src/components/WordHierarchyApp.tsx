@@ -1,71 +1,54 @@
-import React from 'react';
-import { Container, Row, Col, Button, Card } from 'react-bootstrap';
-import CategoryInput from './CategoryInput';
-import SubcategoryInput from './SubcategoryInput';
-import ItemInput from './ItemInput';
-import HierarchyList from './HierarchyList';
-import useWordHierarchy from '../hooks/useWordHierarchy';
-import { saveToJsonFile } from '../services/hierarchyService';
+import React from "react";
+import { Container, Card, Button, Col, Row } from "react-bootstrap";
+import HierarchyList from "./HierarchyList";
+import ItemInput from "./ItemInput";
+import useWordHierarchy from "../hooks/useWordHierarchy";
+import { saveJsonToFile } from "../services/hierarchyService";
+import { WordHierarchy } from "../types/hooks/WordHierarchy";
+import TreeView from "./TreeView";
+import { TreeNode } from "../types/components/TreeViewProps";
 
 const WordHierarchyApp: React.FC = () => {
-  const {
-    hierarchy,
-    newCategory,
-    setNewCategory,
-    currentCategory,
-    newSubcategory,
-    setNewSubcategory,
-    newItem,
-    setNewItem,
-    addCategory,
-    addSubcategory,
-    addItem,
-  } = useWordHierarchy();
+  const { nodes, addRootNode, addChildNode, convertTreeToObject } = useWordHierarchy();
+
+  const handleSaveJson = async () => {
+    const treeObject = convertTreeToObject(nodes);
+    await saveJsonToFile(treeObject);
+  };
+
+  const convertToTreeNode = (data: WordHierarchy[]): TreeNode[] => {
+    return data.map(item => ({
+      name: item.name,
+      children: convertToTreeNode(item.children)
+    }));
+  };
 
   return (
-    <Container className="py-4" style={{ height: '100vh' }}>
-      <Row className="justify-content-center mb-4">
-        <Col xs={12} md={8}>
-          <h1 className="text-center">Hierarquia de Palavras</h1>
-          
-          <Card className="p-3 mb-3">
-            <CategoryInput 
-              newCategory={newCategory} 
-              setNewCategory={setNewCategory} 
-              addCategory={addCategory} 
-            />
-          </Card>
-
-          {currentCategory && (
-            <Card className="p-3 mb-3">
-              <h3 className="text-center">Adicionar Subcategoria para: {currentCategory}</h3>
-              <SubcategoryInput 
-                newSubcategory={newSubcategory} 
-                setNewSubcategory={setNewSubcategory} 
-                addSubcategory={addSubcategory} 
-              />
-              <ItemInput 
-                newItem={newItem} 
-                setNewItem={setNewItem} 
-                addItem={addItem} 
-              />
-            </Card>
-          )}
-
-          <Card className="p-3 mb-3" style={{ maxHeight: '60vh', overflowY: 'auto' }}>
-            <h2 className="text-center">Hierarquia Visual</h2>
-            <HierarchyList hierarchy={hierarchy} />
-          </Card>
-
-          <Button 
-            variant="primary" 
-            onClick={() => saveToJsonFile(hierarchy)} 
-            className="w-100 mb-4"
-          >
-            Salvar como JSON
-          </Button>
-        </Col>
-      </Row>
+    <Container className="mt-4" style={{ height: '85vh' }}>
+      <Row className="justify-content-center">
+        <Col className="bg-light p-4 rounded" md={8}>
+          <h2>Criar árvore</h2>
+          <ItemInput addRootNode={addRootNode} />
+          {
+            nodes.map((node) => (
+              <HierarchyList key={node.id} node={node} addChildNode={addChildNode} />
+            ))
+          }
+              {
+                nodes.length > 0 && (
+                  <Card className="mt-4">
+                    <Card.Body>
+                      <h5>Sua árvore</h5>
+                      <TreeView data={convertToTreeNode(nodes)} />
+                      <Button onClick={handleSaveJson} className="mt-2" variant="primary">
+                        Salvar JSON
+                      </Button>
+                    </Card.Body> 
+                  </Card>
+                )
+              }
+          </Col>
+        </Row>
     </Container>
   );
 };

@@ -1,65 +1,71 @@
-import { useState } from 'react';
-import { WordHierarchy } from '../interfaces/hooks/WordHierarchy';
+import { useState } from "react";
+import { WordHierarchy } from "../types/hooks/WordHierarchy";
 
 const useWordHierarchy = () => {
-  const [hierarchy, setHierarchy] = useState<WordHierarchy>({});
-  const [newCategory, setNewCategory] = useState('');
-  const [currentCategory, setCurrentCategory] = useState<string | null>(null);
-  const [newSubcategory, setNewSubcategory] = useState('');
-  const [newItem, setNewItem] = useState('');
+  const [nodes, setNodes] = useState<WordHierarchy[]>([]);
 
-  const addCategory = () => {
-    if (!newCategory.trim()) return;
-    setHierarchy((prevHierarchy) => ({
-      ...prevHierarchy,
-      [newCategory]: {},
-    }));
-    setNewCategory('');
-    setCurrentCategory(newCategory);
+  const addRootNode = (rootName: string) => {
+    const rootExists = nodes.some(node => node.name === rootName);
+    
+    if (rootExists) {
+      alert(`O nó raiz "${rootName}" já existe!`);
+      return;
+    }
+
+    const newRoot: WordHierarchy = {
+      id: `root-${nodes.length + 1}`,
+      name: rootName,
+      children: []
+    };
+    setNodes((prevNodes) => [...prevNodes, newRoot]);
   };
 
-  const addSubcategory = () => {
-    if (!newSubcategory.trim() || !currentCategory) return;
-    setHierarchy((prevHierarchy) => {
-      const updatedHierarchy = { ...prevHierarchy };
-      updatedHierarchy[currentCategory] = {
-        ...updatedHierarchy[currentCategory],
-        [newSubcategory]: [],
+  const addChildNode = (parentNode: WordHierarchy, childName: string) => {
+    const childExists = parentNode.children.some(child => child.name === childName);
+    
+    if (childExists) {
+      alert(`O nó "${childName}" já existe como filho de "${parentNode.name}"!`);
+      return;
+    }
+
+    const newChild: WordHierarchy = {
+      id: `${parentNode.id}-${parentNode.children.length + 1}`,
+      name: childName,
+      children: []
+    };
+
+    const addNodeRecursively = (node: WordHierarchy): WordHierarchy => {
+      if (node.id === parentNode.id) {
+        return { ...node, children: [...node.children, newChild] };
+      }
+      return {
+        ...node,
+        children: node.children.map(addNodeRecursively)
       };
-      return updatedHierarchy;
-    });
+    };
+
+    setNodes((prevNodes) => prevNodes.map(addNodeRecursively));
   };
 
-  const addItem = () => {
-    if (!newItem.trim() || !currentCategory || !newSubcategory.trim()) return;
-    setHierarchy((prevHierarchy) => {
-      const updatedHierarchy = { ...prevHierarchy };
-      const categoryNode = updatedHierarchy[currentCategory];
-
-      if (categoryNode && categoryNode[newSubcategory]) {
-        const items = categoryNode[newSubcategory];
-        if (!items.includes(newItem)) {
-          items.push(newItem);
+  const convertTreeToObject = (nodes: WordHierarchy[]): any => {
+    const result: any = {};
+    nodes.forEach((node) => {
+      if (node.children.length > 0) {
+        if (node.children.every((child) => child.children.length === 0)) {
+          result[node.name] = node.children.map((child) => child.name);
+        } else {
+          result[node.name] = convertTreeToObject(node.children);
         }
       }
-      return updatedHierarchy;
     });
-    setNewItem('');
+    return result;
   };
 
   return {
-    hierarchy,
-    newCategory,
-    setNewCategory,
-    currentCategory,
-    setCurrentCategory,
-    newSubcategory,
-    setNewSubcategory,
-    newItem,
-    setNewItem,
-    addCategory,
-    addSubcategory,
-    addItem,
+    nodes,
+    addRootNode,
+    addChildNode,
+    convertTreeToObject
   };
 };
 

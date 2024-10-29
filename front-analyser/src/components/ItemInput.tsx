@@ -1,28 +1,36 @@
-import React from 'react';
-import { Form, Button, Row, Col } from 'react-bootstrap';
-import { ItemInputProps } from '../interfaces/components/ItemInputProps';
+import React, { useState } from "react";
+import { Button, Form, Row, Col } from "react-bootstrap";
+import { ItemInputProps } from "../types/components/ItemInputProps";
 
-const ItemInput: React.FC<ItemInputProps> = ({ newItem, setNewItem, addItem }) => (
-  <Form>
-    <Form.Group as={Row} className="align-items-center mb-3">
-      <Form.Label column sm="2">
-        Item:
-      </Form.Label>
-      <Col sm="8">
-        <Form.Control
-          type="text"
-          value={newItem}
-          onChange={(e) => setNewItem(e.target.value)}
-          placeholder="Digite o item"
-        />
-      </Col>
-      <Col sm="2">
-        <Button variant="primary" onClick={addItem}>
-          Adicionar
-        </Button>
-      </Col>
-    </Form.Group>
-  </Form>
-);
+const ItemInput: React.FC<ItemInputProps> = ({ addRootNode }) => {
+  const [rootName, setRootName] = useState<string>("");
+
+  const handleAddRoot = () => {
+    if (rootName.trim()) {
+      addRootNode(rootName);
+      setRootName("");
+    }
+  };
+
+  return (
+    <Form className="my-3">
+      <Row>
+        <Col>
+          <Form.Control
+            type="text"
+            value={rootName}
+            placeholder="Novo Item"
+            onChange={(e) => setRootName(e.target.value)}
+          />
+        </Col>
+        <Col xs="auto">
+          <Button variant="primary" onClick={handleAddRoot}>
+            Adicionar
+          </Button>
+        </Col>
+      </Row>
+    </Form>
+  );
+};
 
 export default ItemInput;

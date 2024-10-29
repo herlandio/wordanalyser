@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import WordHierarchyApp from './components/WordHierarchyApp';
 import { Container } from 'react-bootstrap';
+import WordHierarchyApp from './components/WordHierarchyApp';
 
 const App: React.FC = () => {
   return (

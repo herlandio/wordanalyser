@@ -1,38 +1,58 @@
-import React from 'react';
-import { ListGroup, Card, Container, Row, Col } from 'react-bootstrap';
-import { HierarchyListProps } from '../interfaces/components/HierarchyListProps';
+import React, { useState } from "react";
+import { Button, Row, Col, Form, InputGroup, Card } from "react-bootstrap";
+import { HierarchyListProps } from "../types/components/HierarchyListProps";
 
-const HierarchyList: React.FC<HierarchyListProps> = ({ hierarchy }) => {
-  const renderHierarchy = (hierarchy: any) => {
-    return Object.keys(hierarchy).map((categoryKey) => (
-      <ListGroup.Item key={categoryKey}>
-        <Card className="mb-3">
-          <Card.Header as="h5">{categoryKey}</Card.Header>
-          <ListGroup variant="flush">
-            {Object.keys(hierarchy[categoryKey]).map((subcategoryKey) => (
-              <ListGroup.Item key={subcategoryKey}>
-                <strong>{subcategoryKey}</strong>
-                <ListGroup className="mt-2">
-                  {(hierarchy[categoryKey][subcategoryKey] as string[]).map((item, index) => (
-                    <ListGroup.Item key={index}>{item}</ListGroup.Item>
-                  ))}
-                </ListGroup>
-              </ListGroup.Item>
-            ))}
-          </ListGroup>
-        </Card>
-      </ListGroup.Item>
-    ));
+const HierarchyList: React.FC<HierarchyListProps> = ({ node, addChildNode }) => {
+  const [isExpanded, setIsExpanded] = useState<boolean>(false);
+  const [newChildName, setNewChildName] = useState<string>("");
+
+  const toggleExpand = () => {
+    setIsExpanded(!isExpanded);
+  };
+
+  const handleAddChild = () => {
+    if (newChildName.trim()) {
+      addChildNode(node, newChildName);
+      setNewChildName("");
+      setIsExpanded(true);
+    }
   };
 
   return (
-    <Container>
-      <Row className="justify-content-center">
-        <Col xs={12} md={10} lg={8}>
-          <ListGroup>{renderHierarchy(hierarchy)}</ListGroup>
-        </Col>
-      </Row>
-    </Container>
+    <Card className="my-2" style={{ marginLeft: 20 }}>
+      <Card.Body>
+        <Row>
+          <Col xs="auto">
+            <Button variant="secondary" onClick={toggleExpand} size="sm">
+              {isExpanded ? "Fechar" : "Aumentar"}
+            </Button>
+          </Col>
+          <Col>
+            <strong>{node.name}</strong>
+          </Col>
+        </Row>
+        {isExpanded && (
+          <>
+            <InputGroup className="my-2">
+              <Form.Control
+                type="text"
+                value={newChildName}
+                placeholder="Novo Item"
+                onChange={(e) => setNewChildName(e.target.value)}
+              />
+              <Button variant="primary" onClick={handleAddChild}>
+                Adicionar
+              </Button>
+            </InputGroup>
+            <div className="ml-3">
+              {node.children.map((child) => (
+                <HierarchyList key={child.id} node={child} addChildNode={addChildNode} />
+              ))}
+            </div>
+          </>
+        )}
+      </Card.Body>
+    </Card>
   );
 };
 
