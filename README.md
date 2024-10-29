@@ -25,7 +25,7 @@ Com exibição do tempo de análise (--verbose):
 Acesse a pasta cli-analyser
 
 ```
-docker-compose run --rm wa-svc bun run src/cli.ts analyze --depth 5 "tem cavalos" --verbose
+docker-compose run --rm wa-svc bun run src/cli.ts analyze --depth 4 "tem cavalos" --verbose
 ```
 
 - Esse comando analisa a frase "tem cavalos" até o nível de profundidade 4 e exibe os tempos de carregamento e verificação.
@@ -35,7 +35,7 @@ Sem exibição do tempo de análise:
 Acesse a pasta cli-analyser
 
 ```
-docker-compose run --rm wa-svc bun run src/cli.ts analyze --depth 5 "tem cavalos"
+docker-compose run --rm wa-svc bun run src/cli.ts analyze --depth 4 "tem cavalos"
 ```
 - Neste caso, o tempo de execução não será exibido.
 
