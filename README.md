@@ -2,8 +2,15 @@
 
 Este sistema analisa uma frase fornecida e retorna a quantidade de ocorrências das palavras que estão presentes em um dicionário pré-definido (dicts). O teste pode ser executado em um ambiente Docker.
 
+Clone o repositório
+
+```
+git clone https://github.com/herlandio/wordanalyser.git
+```
+
 ### Pré-requisitos:
  - Docker instalado.
+
 ### Como executar a análise de uma frase:
 
 Acesse a pasta cli-analyser
