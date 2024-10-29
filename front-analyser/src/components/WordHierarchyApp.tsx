@@ -9,7 +9,7 @@ import TreeView from "./TreeView";
 import { TreeNode } from "../types/components/TreeViewProps";
 
 const WordHierarchyApp: React.FC = () => {
-  const { nodes, addRootNode, addChildNode, convertTreeToObject } = useWordHierarchy();
+  const { nodes, addRootNode, addChildNode, removeNode, convertTreeToObject } = useWordHierarchy();
 
   const handleSaveJson = async () => {
     const treeObject = convertTreeToObject(nodes);
@@ -18,6 +18,7 @@ const WordHierarchyApp: React.FC = () => {
 
   const convertToTreeNode = (data: WordHierarchy[]): TreeNode[] => {
     return data.map(item => ({
+      id: item.id,
       name: item.name,
       children: convertToTreeNode(item.children)
     }));
@@ -31,22 +32,22 @@ const WordHierarchyApp: React.FC = () => {
           <ItemInput addRootNode={addRootNode} />
           {
             nodes.map((node) => (
-              <HierarchyList key={node.id} node={node} addChildNode={addChildNode} />
+              <HierarchyList key={node.id} node={node} addChildNode={addChildNode} removeNode={removeNode} />
             ))
           }
+            <Card className="mt-4">
+              <Card.Body>
+              <h5>{!nodes.length ? "Sua árvore esta vazia, crie uma!" : "Sua árvore"}</h5>
               {
                 nodes.length > 0 && (
-                  <Card className="mt-4">
-                    <Card.Body>
-                      <h5>Sua árvore</h5>
-                      <TreeView data={convertToTreeNode(nodes)} />
-                      <Button onClick={handleSaveJson} className="mt-2" variant="primary">
-                        Salvar JSON
-                      </Button>
-                    </Card.Body> 
-                  </Card>
+                  <TreeView data={convertToTreeNode(nodes)} />      
                 )
               }
+                <Button onClick={handleSaveJson} className="mt-2" variant="primary" disabled={!nodes.length}>
+                  Salvar JSON
+                </Button>
+              </Card.Body> 
+            </Card>
           </Col>
         </Row>
     </Container>
