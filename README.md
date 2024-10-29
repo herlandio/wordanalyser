@@ -7,7 +7,6 @@ Clone o repositório
 ```
 git clone https://github.com/herlandio/wordanalyser.git
 ```
-
 ### Pré-requisitos:
  - Docker instalado.
 
@@ -58,6 +57,9 @@ docker-compose run --rm wa-svc bun test
 
 Permite a criação de hierarquias além de exibir visualmente os items adicionados, também a possibilidade de salvar em formato json.
 
+ <img src="https://github.com/herlandio/wordanalyser/blob/development/front-analyser/Captura%20de%20tela%202024-10-29%20121450.png" width="350"/>
+ <img src="https://github.com/herlandio/wordanalyser/blob/development/front-analyser/Captura%20de%20tela%202024-10-29%20121326.png" width="350"/>
+ 
 Acesse a pasta front-analyser 
 
 Instale as Dependências:
